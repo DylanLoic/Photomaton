@@ -13,9 +13,32 @@ class ToolsImages{
 
         var copy = createImage(width, height, RGB);
         
-        
-
-        
 
     }
+
+    Svastika()
+    {
+        
+    }
+
+    DoubleRotation()
+    {
+
+    }
+
+    Baker()
+    {
+
+    }
+
+    Column()
+    {
+
+    }
+
+    InX()
+    {
+
+    }
+
 }
