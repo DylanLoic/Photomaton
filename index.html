@@ -15,7 +15,7 @@
         </div>
         <div>
           <input type="button" value="Previous">
-          <input type="button" onclick="drawBoulanger()" value="Next">
+          <input type="button" onclick="fleur()" value="Next">
         </div>
      </div>
   </body>
@@ -92,6 +92,50 @@
         }
         canvas.getContext('2d').drawImage(newCanvas, 0, 0);
     }
+
+    function inX() 
+    {
+      console.log("click");
+      let width = 256;
+      let height = 256;
+      for (let y of Array(height).keys()) {
+          for (let x of Array(width).keys()) {
+
+              var ctx = canvas.getContext('2d');
+              var newCtx = newCanvas.getContext('2d');
+              var pixelData = ctx.getImageData(x, y, 1, 1);
+              var newX = x;
+              var newY = y;
+              
+              if(x % 2 == 0){
+                x += 2;
+              }else{
+                x -= 2;
+              }
+              if(y % 2 == 0 ){
+                y+=2;
+              }else{
+                y-=2;
+              }
+
+              newCtx.putImageData(pixelData, x, y)
+
+              }
+        }
+
+      canvas.getContext('2d').drawImage(newCanvas, 0, 0);
+    }
+
+    function couplage() 
+    {
+      console.log("click");
+      drawPhotomaton();
+      drawBoulanger();
+    }
+
+   
+
+      
 
   </script>
   <script type="text/javascript" src="Processing.js"></script>
