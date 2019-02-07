@@ -15,7 +15,7 @@
         </div>
         <div>
           <input type="button" value="Previous">
-          <input type="button" onclick="drawPhotomaton()" value="Next">
+          <input type="button" onclick="drawBoulanger()" value="Next">
         </div>
      </div>
   </body>
@@ -30,6 +30,7 @@
         canvas = document.getElementById('canvas');
         canvas.getContext('2d').drawImage(img, 0, 0)
         newCanvas = document.getElementById('newcanvas');
+        newCanvas.getContext('2d').drawImage(img,0,0);
     }
     
 
@@ -58,6 +59,38 @@
           }
         }
       canvas.getContext('2d').drawImage(newCanvas, 0, 0);
+    }
+
+    function drawBoulanger(){
+      console.log('click');
+      let width = 256;
+      let height = 256;
+
+      for (let y of Array(height).keys()) {
+          for (let x of Array(width).keys()) {
+
+              var ctx = canvas.getContext('2d');
+              var newCtx = newCanvas.getContext('2d');
+              var pixelData = ctx.getImageData(x, y, 1, 1);
+
+              if ((y % 2 == 0) && (x < width / 2)) {
+                        newX = 2 * x;
+                        newY = y / 2;
+                    } else if ((y % 2 != 0) && (x < width / 2)) {
+                        newX = 2 * x + 1;
+                        newY = (y - 1) / 2;
+                    } else if ((y % 2 == 0) && (x >= width / 2)) {
+                        newX = 2 * width - 1 - 2 * x;
+                        newY = height - 1 - y / 2;
+                    } else if ((y % 2 != 0) && (x >= width / 2)) {
+                        newX = 2 * width - 2 - 2 * x;
+                        newY = height - 1 - (y - 1) / 2;
+                    }
+
+                    newCtx.putImageData(pixelData, newX, newY)
+          }
+        }
+        canvas.getContext('2d').drawImage(newCanvas, 0, 0);
     }
 
   </script>
