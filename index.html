@@ -4,34 +4,62 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   </head>
-  <body onload="draw()">
+  <body onload="Setup()">
      <div id="content">
         <div>
           <input type="file" accept="image/*" id="imagePicker">
         </div>
         <div id="image">
-          <img src="#" alt="Image">
-          <canvas id="canvas" width="256" height="256"></canvas>
+          <canvas id="canvas" width="256" height="256" style="display:none"></canvas>
+          <canvas id="newcanvas" width="256" height="256"></canvas>
         </div>
         <div>
           <input type="button" value="Previous">
-          <input type="button" value="Next">
+          <input type="button" onclick="drawPhotomaton()" value="Next">
         </div>
      </div>
   </body>
   <script type="text/javascript">
-    function draw() {
-    var ctx = document.getElementById('canvas').getContext('2d');
-    var img = new Image();
-    img.onload = function() {
-      for (var i = 0; i < 4; i++) {
-        for (var j = 0; j < 4; j++) {
-          ctx.drawImage(img, j * 50, i * 38, 50, 38);
+    var img;
+    var canvas;
+    var newCanvas;
+    
+    function Setup(){
+        img = new Image();
+        img.src="./image.jpg";
+        canvas = document.getElementById('canvas');
+        canvas.getContext('2d').drawImage(img, 0, 0)
+        newCanvas = document.getElementById('newcanvas');
+    }
+    
+
+
+    function drawPhotomaton() 
+    {
+      console.log("click");
+      let width = 256;
+      let height = 256;
+
+      for (let y of Array(height).keys()) {
+          for (let x of Array(width).keys()) {
+
+              var ctx = canvas.getContext('2d');
+              var newCtx = newCanvas.getContext('2d');
+              var pixelData = ctx.getImageData(x, y, 1, 1);
+
+              if (x % 2 == 0 && y % 2 == 0)
+                  newCtx.putImageData(pixelData, x / 2, y / 2)
+              else if (x % 2 == 0)
+                  newCtx.putImageData(pixelData, x / 2, height / 2 + y / 2)
+              else if (y % 2 == 0)
+                  newCtx.putImageData(pixelData, width / 2 + x / 2, y / 2)
+              else
+                  newCtx.putImageData(pixelData, width / 2 + x / 2, height / 2 + y / 2)
+          }
         }
-      }
-    };
-    img.src = 'https://images.math.cnrs.fr/IMG/png/section8-image.png';
-  }
+      canvas.getContext('2d').drawImage(newCanvas, 0, 0);
+    }
+
   </script>
   <script type="text/javascript" src="Processing.js"></script>
   <script type="text/javascript" src="ToolsImages.js"></script>
