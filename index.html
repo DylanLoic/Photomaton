@@ -31,24 +31,17 @@
           <h1>Mendez, Mudespacher, Schito</h1>
         </div>
       </div>
-      <div class="row">
-        <div class="col-10">
-          <div class="form-group">
-            <input style="width:100%;" type="file" accept="image/*"
-              id="imagePicker" class="form-control-file">
-          </div>
-        </div>
-      </div>
+      
 
       <div class="row">
         <div class="col-10">
-          <select id="algorithm" style="width:100%;" class="form-control" onchange="selectAlgorithm()">
+          <select id="algorithm" style="width:100%;" class="form-control">
             <option value="0">Photomaton</option>
             <option value="1">Baker</option>
             <option value="2">Couplage</option>
             <option value="3">Fleur</option>
-            <option value="4">In X</option>
-            <option value="5">Other</option>
+            <option value="4">Column</option>
+            <option value="5">Diagonal transposition</option>
           </select>
         </div>
       </div>
@@ -65,10 +58,10 @@
 
       <div class="row">
         <div class="col-5" style="text-align: center;">
-          <input type="button" value="Next" class="btn btn-primary" style="width: 200px;" disabled>
+          <input type="button" value="Next" class="btn btn-primary" onclick="Next()" style="width: 200px;">
         </div>
         <div class="col-5" style="text-align:center;">
-          <input type="button" value="Continue" class="btn btn-primary" style="width: 200px;">
+          <input type="button" value="Continue" class="btn btn-primary" onclick="CallAlgorithmContinue()" style="width: 200px;">
         </div>
       </div>
     </div>
@@ -77,6 +70,7 @@
     var img;
     var canvas;
     var newCanvas;
+    var ti;
     const SLEEP_TIME = 50;
     
     function Setup(){
@@ -87,6 +81,8 @@
         canvas.getContext('2d').drawImage(img, 0, 0)
         newCanvas = document.getElementById('newcanvas');
         newCanvas.getContext('2d').drawImage(img,0,0);
+
+        ti = new ToolsImages(canvas, newCanvas);
     }
     
 
@@ -105,39 +101,61 @@
         return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
     }
 
-    async function CallAlgorithm(pAlgorithm){
+    async function CallAlgorithmContinue(){
+      var indexAlgorithm = parseInt(document.querySelector("#algorithm").value);
       do{
-        
-        await sleep(100);
+        switch(indexAlgorithm){
+          case 0:
+            ti.Photomaton();
+            break;
+          case 1:
+            ti.Baker();
+            break;
+          case 2:
+            ti.Couplage();
+            break;
+          case 3:
+            ti.Fleur();
+            break;
+          case 4:
+            ti.Column();
+            break;
+          case 5:
+            ti.Twist();
+            break;
+          default:
+            break;
+        }
+        await sleep(10);
       }while (getBase64Image(img) != getBase64Image(newCanvas));
     }
 
- 
-
-
-    function twist() 
-    {
-      console.log("click");
-      let width = 256;
-      let height = 256;
-      for (let y of Array(height).keys()) {
-          for (let x of Array(width).keys()) {
-
-              var ctx = canvas.getContext('2d');
-              var newCtx = newCanvas.getContext('2d');
-              var pixelData = ctx.getImageData(x, y, 1, 1);
-              var newX = x;
-              var newY = y;
-              
-              newX = x+1;
-              newY = y+1;
-
-              newCtx.putImageData(pixelData, newX, newY)
-
-              }
-        }
-      canvas.getContext('2d').drawImage(newCanvas, 0, 0);
+    function Next(){
+      var indexAlgorithm = parseInt(document.querySelector("#algorithm").value);
+      switch(indexAlgorithm){
+        case 0:
+          ti.Photomaton();
+          break;
+        case 1:
+          ti.Baker();
+          break;
+        case 2:
+          ti.Couplage();
+          break;
+        case 3:
+          ti.Fleur();
+          break;
+        case 4:
+          ti.Column();
+          break;
+        case 5:
+          ti.Twist();
+          break;
+        default:
+          break;
+      }
     }
+
 
    
 
@@ -145,5 +163,5 @@
 
   </script>
   <script type="text/javascript" src="Processing.js"></script>
-  <!-- <script type="text/javascript" src="ToolsImages.js"></script> -->
+  <script type="text/javascript" src="ToolsImages.js"></script>
 </html>
