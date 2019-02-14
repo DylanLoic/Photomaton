@@ -10,17 +10,6 @@ class ToolsImages{
         this.Counter = 0;
     }
     
-    height = 0;
-    canvas;
-    image;*/
-
-    constructor(pImage, pCanvas)
-    {
-        this.image = pImage;
-        this.canvas = pCanvas;
-    }
-
-    
 
     Photomaton(nb = 2, action='do'){
         var nbx = Array.isArray(nb) ? nb[0] : nb;
@@ -33,8 +22,6 @@ class ToolsImages{
         height -= height%nby;
 
         var copy = createImage(width, height, RGB);
-        
-
     }
 
     Svastika()
