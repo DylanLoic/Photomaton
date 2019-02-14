@@ -1,15 +1,13 @@
-
 class ToolsImages{
-    
-    // Width = 0;
-    // Height = 0;
-    // Context;
-    
-    constructor(context, width, height)
+    constructor(canvas, newCanvas)
     {
-        this.Context = context;
-        this.Width = width;
-        this.Height = height;
+        this.OldCanvas = canvas;
+        this.NewCanvas = newCanvas;
+        this.OldContext = this.OldCanvas.getContext("2d");
+        this.NewContext = this.NewCanvas.getContext("2d");
+        this.Width = this.OldCanvas.width;
+        this.Height = this.OldCanvas.height;
+        this.Counter = 0;
     }
 
     Photomaton(){
@@ -32,56 +30,68 @@ class ToolsImages{
 
     }
 
-    Column()
-    {
-        var leftPixels = [this.Width/2, this.Height];
-        var rightPixels = [this.Width/2, this.Height];
-        var finalImage = [this.Width, this.Height];  
-        
-        var img = this.Context.getImageData(0, 0, this.Width, this.Height);
-        
-        for (var i = 0; i < this.Width; i++) {
-            for (var j = 0; j < this.Height; j++) {
+    Boustrophedon()
+    { 
+        var counterX = 0;
+        var counterY = 0;
+        for (let y of Array(this.Height).keys()) {
+            for (let x of Array(this.Width).keys()) {
+                this.OldContext = this.OldCanvas.getContext('2d');
+                this.NewContext = this.NewCanvas.getContext('2d');
+                var pixelData = this.OldContext.getImageData(x, y, 1, 1);
+                counterX = x;
+                counterY = y;
                 
-                if(i < this.Width/2)
+                
+                if(y % 2 == 0)
                 {
-                    
-                    leftPixels[i,j] = img.Data[i,j]
+                    if(counterX == 0)
+                    {
+                        counterX = 255;
+                        if(counterY == 0)
+                        {
+                            counterY = 255;
+                            this.NewContext.putImageData(pixelData, counterX+1, counterY);
+                        }
+                        else
+                        {
+                            this.NewContext.putImageData(pixelData, counterX, counterY);
+                        }
+                    }
+                    else
+                    {
+                        this.NewContext.putImageData(pixelData, x-1, counterY);
+                    }
                 }
                 else
                 {
-                    rightPixels[i,j] = this.Context.getImageData(i, j, this.Width, this.Height);
-                }
-                
-                
-            }
-        }
-        
-        for (var k = 0; k < this.Width; k++) {
-            for (var l = 0; l < this.Height; l++) {
-                
-                if(k % 2 == 0 && k < this.Width/2)
-                {
+                    if(counterX == 255)
+                    {
+                        counterX = 0;
+                        if(counterY == 255)
+                        {
+                            counterY = 0;
+                            this.NewContext.putImageData(pixelData, counterX, counterY);
+                        }
+                        else
+                        {
+                            this.NewContext.putImageData(pixelData, counterX, counterY);
+                        }
+                    }
+                    else
+                    {
+                        this.NewContext.putImageData(pixelData, counterX+1, counterY);
+                    }
                     
-                    finalImage[k,l] = rightPixels[k,l];
-                }
-                else if(k % 2 !== 0 && k < this.Width/2)
-                {
-                    finalImage[k,l] = leftPixels[k,l];
-                }
-                else if (k % 2 == 0 && k > this.Width/2)
-                {
-                    finalImage[k,l] = leftPixels[k,l];
-                }
-                else if(k % 2 !== 0 && k > this.Width/2)
-                {
-                    finalImage[k,l] = rightPixels[k,l];
+                
                 }
                 
-                
+                counterX++;
             }
-            
+            counterY++;
         }
+        this.Counter++;
+        this.OldCanvas.getContext('2d').drawImage(this.NewCanvas, 0, 0);
         
     }
 
