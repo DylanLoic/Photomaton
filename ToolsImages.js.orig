@@ -1,15 +1,7 @@
 class ToolsImages{
-    constructor(canvas, newCanvas)
-    {
-        this.OldCanvas = canvas;
-        this.NewCanvas = newCanvas;
-        this.OldContext = this.OldCanvas.getContext("2d");
-        this.NewContext = this.NewCanvas.getContext("2d");
-        this.Width = this.OldCanvas.width;
-        this.Height = this.OldCanvas.height;
-        this.Counter = 0;
-    }
+<<<<<<< HEAD
     
+    /*width = 0;
     height = 0;
     canvas;
     image;*/
@@ -21,18 +13,20 @@ class ToolsImages{
     }
 
     
+=======
+    constructor(canvas, newCanvas)
+    {
+        this.OldCanvas = canvas;
+        this.NewCanvas = newCanvas;
+        this.OldContext = this.OldCanvas.getContext("2d");
+        this.NewContext = this.NewCanvas.getContext("2d");
+        this.Width = this.OldCanvas.width;
+        this.Height = this.OldCanvas.height;
+        this.Counter = 0;
+    }
+>>>>>>> 8e79ad663b6d9c5ece236b7194130cb2349e7ed3
 
-    Photomaton(nb = 2, action='do'){
-        var nbx = Array.isArray(nb) ? nb[0] : nb;
-        var nby = Array.isArray(nb) ? nb[1] : nb;
-
-        var width = 256;
-        var height = 256;
-
-        width -= width%nbx;
-        height -= height%nby;
-
-        var copy = createImage(width, height, RGB);
+    Photomaton(){
         
 
     }
@@ -119,6 +113,7 @@ class ToolsImages{
 
     InX()
     {
+<<<<<<< HEAD
         var imagedata = this.canvas.getImageData(0,0,this.canvas.canvas.width, this.canvas.canvas.height);
         var tmpimagedata = imagedata;
         console.log(imagedata);
@@ -138,6 +133,9 @@ class ToolsImages{
         }
         console.log(tmpimagedata);
         //console.log("Largeur = " + this.canvas.canvas.width + " \nHauteur = " + this.canvas.canvas.height);
+=======
+        
+>>>>>>> 8e79ad663b6d9c5ece236b7194130cb2349e7ed3
     }
 
 }

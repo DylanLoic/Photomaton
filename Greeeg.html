@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body onload="">
+     <div id="content">
+        <div>
+          <input type="file" accept="image/*" id="imagePicker">
+        </div>
+        <div id="image">
+          <canvas id="canvas" width="256" height="256" style="display:none"></canvas>
+          <canvas id="newCanvas" width="256" height="256"></canvas>
+        </div>
+        <div>
+          <input type="button" value="Previous">
+          <input type="button" onclick="draw()" value="Next">
+        </div>
+     </div>
+    <script type="text/javascript" src="./ToolsImages.js"></script>
+    <script type="text/javascript">
+    var canvas = document.getElementById('canvas');
+    var newCanvas = document.getElementById('newCanvas');
+    var img = new Image();
+    img.src = "img.png";
+    img.onload = function(){
+        canvas.getContext("2d").drawImage(img, 0, 0);
+        newCanvas.getContext("2d").drawImage(img, 0, 0);
+    };
+    var counter = 0;
+    var imgManager = new ToolsImages(canvas, newCanvas);
+    
+     function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function getBase64Image(img) {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        var dataURL = canvas.toDataURL("image/png");
+
+        return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+    }
+
+    
+    async function draw() {
+        do{
+        imgManager.Boustrophedon();
+        await sleep(10);
+        }while(getBase64Image(img) != getBase64Image(newCanvas));
+    
+      
+  }
+  </script>
+  </body>
+ 
+
+</html>

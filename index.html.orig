@@ -19,6 +19,7 @@
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"></script>
   </head>
+<<<<<<< HEAD
   <body onload="draw()" style="width: 100%; height:100%;">
     <div id="content" class="container">
       <div class="row">
@@ -37,6 +38,20 @@
             <input style="width:100%;" type="file" accept="image/*"
               id="imagePicker" class="form-control-file">
           </div>
+=======
+  <body onload="Setup()">
+     <div id="content">
+        <div>
+          <input type="file" accept="image/*" id="imagePicker">
+        </div>
+        <div id="image">
+          <canvas id="canvas" width="256" height="256" style="display:none"></canvas>
+          <canvas id="newcanvas" width="256" height="256"></canvas>
+        </div>
+        <div>
+          <input type="button" value="Previous">
+          <input type="button" onclick="drawPhotomaton()" value="Next">
+>>>>>>> 8e79ad663b6d9c5ece236b7194130cb2349e7ed3
         </div>
       </div>
 
@@ -73,6 +88,26 @@
     </div>
   </body>
   <script type="text/javascript">
+<<<<<<< HEAD
+    var algorithm = document.querySelector("#algorithm").value;
+
+    function draw() {
+    var ctx = document.getElementById('canvas').getContext('2d');
+    var img = new Image();
+    img.onload = function() {
+      for (var i = 0; i < 4; i++) {
+        for (var j = 0; j < 4; j++) {
+          ctx.drawImage(img, j * 50, i * 38, 50, 38);
+        }
+      }
+    };
+    img.src = 'https://images.math.cnrs.fr/IMG/png/section8-image.png';
+  }
+  function selectAlgorithm()
+  {
+    algorithm = document.querySelector("#algorithm").value;
+  }
+=======
     var img;
     var canvas;
     var newCanvas;
@@ -299,6 +334,7 @@
 
       
 
+>>>>>>> 8e79ad663b6d9c5ece236b7194130cb2349e7ed3
   </script>
   <script type="text/javascript" src="Processing.js"></script>
   <!-- <script type="text/javascript" src="ToolsImages.js"></script> -->
