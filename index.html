@@ -35,12 +35,12 @@
 
       <div class="row">
         <div class="col-10">
-          <select id="algorithm" style="width:100%;" class="form-control">
+          <select id="algorithm" style="width:100%;" class="form-control" onchange="AlgorithmSelectChanged()">
             <option value="0">Photomaton</option>
             <option value="1">Baker</option>
             <option value="2">Couplage</option>
             <option value="3">Fleur</option>
-            <option value="4">Column</option>
+            <option value="4">Boustrophedon</option>
             <option value="5">Diagonal transposition</option>
           </select>
         </div>
@@ -53,6 +53,11 @@
             <canvas id="canvas" width="256" height="256" style="display:none;"></canvas>
             <canvas id="newcanvas" width="256" height="256"></canvas>
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-10">
+          <h3 id="nbSteps">Nombre d'étapes : 8</h3>
         </div>
       </div>
 
@@ -85,6 +90,34 @@
         ti = new ToolsImages(canvas, newCanvas);
     }
     
+    function AlgorithmSelectChanged(){
+      var indexAlgorithm = parseInt(document.querySelector("#algorithm").value);
+      var steps = document.querySelector("#nbSteps");
+      var txt_steps = "Nombre d'étapes : "
+      switch(indexAlgorithm){
+          case 0:
+              steps.innerHTML = txt_steps + "8";
+            break;
+          case 1:
+              steps.innerHTML = txt_steps + "8";
+            break;
+          case 2:
+            steps.innerHTML = txt_steps + "12";
+            break;
+          case 3:
+            steps.innerHTML = txt_steps + "9";
+            break;
+          case 4:
+            steps.innerHTML = txt_steps + "256";
+            break;
+          case 5:
+            steps.innerHTML = txt_steps + "256";
+            break;
+          default:
+            break;
+        }
+
+    }
 
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
@@ -162,6 +195,5 @@
       
 
   </script>
-  <script type="text/javascript" src="Processing.js"></script>
   <script type="text/javascript" src="ToolsImages.js"></script>
 </html>
