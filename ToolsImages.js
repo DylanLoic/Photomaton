@@ -1,9 +1,9 @@
 
 class ToolsImages{
     
-    Width = 0;
-    Height = 0;
-    Context;
+    // Width = 0;
+    // Height = 0;
+    // Context;
     
     constructor(context, width, height)
     {
