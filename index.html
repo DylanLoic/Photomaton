@@ -105,114 +105,15 @@
         return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
     }
 
-    
-
-    async function drawPhotomaton() 
-    {
-      console.log("click photomaton");
-      let width = 256;
-      let height = 256;
-
-      do {
-        for (let y of Array(height).keys()) {
-            for (let x of Array(width).keys()) {
-
-                var ctx = canvas.getContext('2d');
-                var newCtx = newCanvas.getContext('2d');
-                var pixelData = ctx.getImageData(x, y, 1, 1);
-
-                if (x % 2 == 0 && y % 2 == 0)
-                    newCtx.putImageData(pixelData, x / 2, y / 2)
-                else if (x % 2 == 0)
-                    newCtx.putImageData(pixelData, x / 2, height / 2 + y / 2)
-                else if (y % 2 == 0)
-                    newCtx.putImageData(pixelData, width / 2 + x / 2, y / 2)
-                else
-                    newCtx.putImageData(pixelData, width / 2 + x / 2, height / 2 + y / 2)
-            }
-          }
-        canvas.getContext('2d').drawImage(newCanvas, 0, 0);
-        console.log(" while : photomaton");
-        await sleep(SLEEP_TIME);
-    }while (getBase64Image(img) != getBase64Image(newCanvas));
-    console.log("end while : photomaton");
-
-    }
-
-   async function drawBoulanger(){
-      console.log('click');
-      let width = 256;
-      let height = 256;
+    async function CallAlgorithm(pAlgorithm){
       do{
-        for (let y of Array(height).keys()) {
-            for (let x of Array(width).keys()) {
-
-                var ctx = canvas.getContext('2d');
-                var newCtx = newCanvas.getContext('2d');
-                var pixelData = ctx.getImageData(x, y, 1, 1);
-
-                if ((y % 2 == 0) && (x < width / 2)) {
-                          newX = 2 * x;
-                          newY = y / 2;
-                      } else if ((y % 2 != 0) && (x < width / 2)) {
-                          newX = 2 * x + 1;
-                          newY = (y - 1) / 2;
-                      } else if ((y % 2 == 0) && (x >= width / 2)) {
-                          newX = 2 * width - 1 - 2 * x;
-                          newY = height - 1 - y / 2;
-                      } else if ((y % 2 != 0) && (x >= width / 2)) {
-                          newX = 2 * width - 2 - 2 * x;
-                          newY = height - 1 - (y - 1) / 2;
-                      }
-
-                      newCtx.putImageData(pixelData, newX, newY)
-            }
-          }
-          canvas.getContext('2d').drawImage(newCanvas, 0, 0);
-          await sleep(SLEEP_TIME);
-      }while (getBase64Image(img) != getBase64Image(newCanvas));
-
-    }
-
-    async function inX() 
-    {
-      console.log("click");
-      let width = 256;
-      let height = 256;
-      do{
-      for (let y of Array(height).keys()) {
-          for (let x of Array(width).keys()) {
-
-              var ctx = canvas.getContext('2d');
-              var newCtx = newCanvas.getContext('2d');
-              var pixelData = ctx.getImageData(x, y, 1, 1);
-              var newX = x;
-              var newY = y;
-              
-              if(x % 2 == 0){
-                newX = x + 2;
-              }else{
-                newX = x - 2;
-              }
-              if(y % 2 == 0 ){
-                newY=y + 2;
-              }else{
-                newY= y - 2;
-              }
-              newCtx.putImageData(pixelData, newX, newY)
-              }
-        }
-      canvas.getContext('2d').drawImage(newCanvas, 0, 0);
-      await sleep(5);
+        
+        await sleep(100);
       }while (getBase64Image(img) != getBase64Image(newCanvas));
     }
 
-    function couplage() 
-    {
-      console.log("click");
-      drawPhotomaton();
-      drawBoulanger();
-    }
+ 
+
 
     function twist() 
     {
@@ -236,65 +137,6 @@
               }
         }
       canvas.getContext('2d').drawImage(newCanvas, 0, 0);
-    }
-
-    function fleur(){
-      console.log("click");
-      let width = 256;
-      let height = 256;
-
-            for (let y = height; y >= 0; y--) {
-                for (let x = width; x >= 0; x--) {
-
-                  var ctx = canvas.getContext('2d');
-                  var newCtx = newCanvas.getContext('2d');
-                  var pixelData = ctx.getImageData(x, y, 1, 1);
-
-                    var newX = x;
-                    var newY = y;
-                    let l = width / 2;
-                    let h = height / 2;
-
-                    if((x % 2 == 0)&&( y % 2 == 0)){
-                      newX = x / 2;
-                      newY = y / 2;
-                    }else if((x % 2 == 1) && (y % 2 == 0)){
-                      newX = (x - 1) / 2 + l;
-                      newY = y / 2;
-
-                      let middle = 3 * l / 2;
-                      newX += 2 * (middle - newX);
-                      if(width / 2 % 2 == 0){
-                        newX--;
-                      }
-                    }else if((x % 2 == 0)&&(y % 2 == 1)){
-                      newX = x / 2;
-                      newY = (y - 1) / 2 + h;
-
-                      let middle = 3 * h / 2;
-                      newY += 2 * (middle - newY);
-                      if(height / 2 % 2 == 0){
-                        newY--;
-                      }
-                    }else{
-                      newX = (x - 1)/2+l;
-                      newY = (y - 1)/2+h;
-
-                      let middle = 3 * l / 2;
-                      newX += 2 * (middle - newX);
-                      if(width / 2 % 2 == 0){
-                        newX--;
-                      }
-                      middle = 3 * h / 2;
-                      newY += 2 * (middle - newY);
-                      if(height / 2 % 2 == 0){
-                        newY--;
-                      }
-                    }
-                    newCtx.putImageData(pixelData, newX, newY);                 
-                }
-            }
-            canvas.getContext('2d').drawImage(newCanvas, 0, 0);
     }
 
    

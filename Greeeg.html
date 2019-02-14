@@ -49,7 +49,7 @@
     
     async function draw() {
         do{
-        imgManager.Boustrophedon();
+        imgManager.Column();
         await sleep(10);
         }while(getBase64Image(img) != getBase64Image(newCanvas));
     
