@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="Processing.js"></script>
+    <script type="text/javascript" src="ToolsImages.js" defer></script>
+  </head>
+  <body onload="draw()">
+     <div id="content">
+        <div>
+          <input type="file" accept="image/*" id="imagePicker">
+        </div>
+        <div id="image">
+          <img src="#" alt="Image">
+          <canvas id="canvas" width="256" height="256"></canvas>
+        </div>
+        <div>
+          <input type="button" value="Previous">
+          <input type="button" value="Next">
+        </div>
+     </div>
+  </body>
+  
+  <script type="text/javascript">
+    
+    
+    function draw() {
+        var ctx = document.getElementById('canvas').getContext('2d');
+        var img = new Image();
+        img.src = 'tamer.png';
+        var test = new ToolsImages(img, ctx);
+        
+        img.onload = function() {
+            ctx.drawImage(img, 0,0);
+            test.InX(img, ctx);
+      /*for (var i = 0; i < 4; i++) {
+        for (var j = 0; j < 4; j++) {
+          ctx.drawImage(img, j * 50, i * 38, 50, 38);
+        }
+      }*/
+        }
+    
+  }
+
+  
+  </script>
+</html>

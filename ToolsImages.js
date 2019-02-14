@@ -1,10 +1,15 @@
 class ToolsImages {
 
-	constructor(context, width, height) {
-		this.Context = context;
-		this.Width = width;
-		this.Height = height;
-	}
+	constructor(canvas, newCanvas)
+    {
+        this.OldCanvas = canvas;
+        this.NewCanvas = newCanvas;
+        this.OldContext = this.OldCanvas.getContext("2d");
+        this.NewContext = this.NewCanvas.getContext("2d");
+        this.Width = this.OldCanvas.width;
+        this.Height = this.OldCanvas.height;
+        this.Counter = 0;
+    }
 
 	Photomaton() {
 		console.log("Photomaton algorithm");
@@ -19,13 +24,13 @@ class ToolsImages {
 				var pixelData = ctx.getImageData(x, y, 1, 1);
 
 				if (x % 2 == 0 && y % 2 == 0)
-					newCtx.putImageData(pixelData, x / 2, y / 2)
+					newCtx.putImageData(pixelData, x / 2, y / 2);
 				else if (x % 2 == 0)
-					newCtx.putImageData(pixelData, x / 2, height / 2 + y / 2)
+					newCtx.putImageData(pixelData, x / 2, height / 2 + y / 2);
 				else if (y % 2 == 0)
-					newCtx.putImageData(pixelData, width / 2 + x / 2, y / 2)
+					newCtx.putImageData(pixelData, width / 2 + x / 2, y / 2);
 				else
-					newCtx.putImageData(pixelData, width / 2 + x / 2, height / 2 + y / 2)
+					newCtx.putImageData(pixelData, width / 2 + x / 2, height / 2 + y / 2);
 			}
 		}
 		canvas.getContext('2d').drawImage(newCanvas, 0, 0);
@@ -55,7 +60,50 @@ class ToolsImages {
 
                 newCtx.putImageData(pixelData, newX, newY)
 
+    Column()
+    { 
+        var counterX = 0;
+        var counterY = 0;
+        for (let y of Array(this.Height).keys()) {
+            for (let x of Array(this.Width).keys()) {
+                this.OldContext = this.OldCanvas.getContext('2d');
+                this.NewContext = this.NewCanvas.getContext('2d');
+                var pixelData = this.OldContext.getImageData(x, y, 1, 1);
+                counterX = x;
+                counterY = y;
+                
+                
+                if(y % 2 == 0)
+                {
+                    if(counterX == 0)
+                    {
+                        
+                        counterX = 255;
+                        this.NewContext.putImageData(pixelData, counterX, counterY);
+                    }
+                    else
+                    {
+                        this.NewContext.putImageData(pixelData, x-1, counterY);
+                    }
+                }
+                else
+                {
+                    if(counterX == 255)
+                    {
+                        counterX = 0;
+                        this.NewContext.putImageData(pixelData, counterX, counterY);
+                    }
+                    else
+                    {
+                        this.NewContext.putImageData(pixelData, counterX+1, counterY);
+                    }
+                    
+                
+                }
+                
+                counterX++;
             }
+            counterY++;
         }
         canvas.getContext('2d').drawImage(newCanvas, 0, 0);
 	}
@@ -149,6 +197,7 @@ class ToolsImages {
         }
         canvas.getContext('2d').drawImage(newCanvas, 0, 0);
     }
+
 	Column() {
 		var leftPixels = [this.Width / 2, this.Height];
 		var rightPixels = [this.Width / 2, this.Height];
