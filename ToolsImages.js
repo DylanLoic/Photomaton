@@ -52,7 +52,7 @@ class ToolsImages{
 
     }
 
-    Boustrophedon()
+    Column()
     { 
         var counterX = 0;
         var counterY = 0;
@@ -69,16 +69,9 @@ class ToolsImages{
                 {
                     if(counterX == 0)
                     {
+                        
                         counterX = 255;
-                        if(counterY == 0)
-                        {
-                            counterY = 255;
-                            this.NewContext.putImageData(pixelData, counterX+1, counterY);
-                        }
-                        else
-                        {
-                            this.NewContext.putImageData(pixelData, counterX, counterY);
-                        }
+                        this.NewContext.putImageData(pixelData, counterX, counterY);
                     }
                     else
                     {
@@ -90,15 +83,7 @@ class ToolsImages{
                     if(counterX == 255)
                     {
                         counterX = 0;
-                        if(counterY == 255)
-                        {
-                            counterY = 0;
-                            this.NewContext.putImageData(pixelData, counterX, counterY);
-                        }
-                        else
-                        {
-                            this.NewContext.putImageData(pixelData, counterX, counterY);
-                        }
+                        this.NewContext.putImageData(pixelData, counterX, counterY);
                     }
                     else
                     {
